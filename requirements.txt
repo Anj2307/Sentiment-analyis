@@ -2,12 +2,9 @@ requests
 pandas
 python-dotenv
 scikit-learn
-collections
 matplotlib
 seaborn
-warnings
 wordcloud
 nltk
-json
-re
 vaderSentiment
+mlflow
