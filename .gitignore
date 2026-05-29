@@ -3,3 +3,4 @@ data/
 mlruns/
 venv/
 notebooks/mlflow.db
+results/
