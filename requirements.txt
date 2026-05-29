@@ -8,3 +8,6 @@ wordcloud
 nltk
 vaderSentiment
 mlflow
+datasets
+torch
+transformers
