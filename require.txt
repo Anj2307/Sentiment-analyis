@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+mlflow
+transformers
+torch
+pandas
+google-api-python-client
+python-dotenv
+pydantic
+scikit-learn
