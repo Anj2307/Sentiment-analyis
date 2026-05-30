@@ -4,3 +4,6 @@ mlruns/
 venv/
 notebooks/mlflow.db
 results/
+__pycache__/
+mlflow.db
+*.pyc
