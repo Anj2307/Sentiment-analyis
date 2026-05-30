@@ -11,3 +11,7 @@ mlflow
 datasets
 torch
 transformers
+fastapi
+uvicorn
+pydantic
+google-api-python-client
