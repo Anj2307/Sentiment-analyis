@@ -7,3 +7,5 @@ results/
 __pycache__/
 mlflow.db
 *.pyc
+models/
+*.zip
