@@ -7,6 +7,9 @@ import pandas as pd
 import time
 import os
 from src.collect import fetch_comments_from_url
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import torch
+import os
 
 app = FastAPI(
     title="Sentiment Analysis API",
@@ -49,6 +52,45 @@ class YouTubeResponse(BaseModel):
     top_negative: str
     inference_ms: float
     comments:     List[dict]
+
+class DirectBertModel:
+    def __init__(self):
+        local_path="results/bert_sentiment_model"
+        hub_path="Anj2307/youtube-sentiment-distilbert"
+
+        if os.path.exists(local_path):
+            print(f"Loading model from local path: {local_path}")
+            self.tokenizer = AutoTokenizer.from_pretrained(local_path)
+            self.model     = AutoModelForSequenceClassification.from_pretrained(local_path)
+        else:
+            print(f"Local path not found. Loading model from Hugging Face Hub: {hub_path}")
+            self.tokenizer = AutoTokenizer.from_pretrained(hub_path)
+            self.model     = AutoModelForSequenceClassification.from_pretrained(hub_path)
+        self.model.eval()
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.model.to(self.device)
+    def predict(self, input_df):
+        texts=input_df["text"].tolist()
+        results=[]
+
+        for text in texts:
+            inputs= self.tokenizer(
+                text,
+                truncation=True,
+                padding=True,
+                max_length=256,
+                return_tensors="pt"
+
+            )
+            with torch.no_grad():
+                outputs=self.model(**inputs)
+                pred= torch.argmax(outputs.logits,dim=1).item()
+                results.append("pos" if pred==0 else "neg")
+        return results
+
+model=DirectBertModel()
+
+
 
 # ── endpoints ─────────────────────────────────────────────
 
