@@ -8,3 +8,5 @@ google-api-python-client
 python-dotenv
 pydantic
 scikit-learn
+streamlit
+plotly
